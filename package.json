@@ -1,0 +1,26 @@
+{
+  "name": "http-api-assignment",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node ./src/server.js",
+    "pretest": "eslint ./src --fix",
+    "test": "echo \"Tests complete\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aem3780/http-api-assignment.git"
+  },
+  "author": "Allie Maus",
+  "license": "Unlicense",
+  "bugs": {
+    "url": "https://github.com/aem3780/http-api-assignment/issues"
+  },
+  "homepage": "https://github.com/aem3780/http-api-assignment#readme",
+  "dependencies": {
+    "eslint": "^8.8.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-import": "^2.25.4"
+  }
+}

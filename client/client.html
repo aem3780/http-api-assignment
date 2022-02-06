@@ -6,6 +6,74 @@
   
   <script>
 
+const sendFetch = async () => {
+  //get info from drop down 
+      const url = document.getElementById('page').value;
+      const type = document.getElementById('type').value;
+
+      const options = {
+        headers: { 'Accept': type }
+      };
+
+      const response = await fetch(url, options);
+      handleResponse(response);
+    };
+
+    //send fetch request when button is clicked
+    const init = () => {
+      const send = document.getElementById('send');
+      send.addEventListener('click', sendFetch);
+    };
+    
+    window.onload = init;
+
+  const handleResponse = async (response) => {
+    const content = document.getElementById('content')
+    const responseText = await response.text();
+    const contentType = response.headers.get('Content-Type');
+
+  console.log(responseText);
+
+     //check the status code
+  switch(response.status) {
+        case 200://success
+          content.innerHTML = '<b>Success</b>';
+          break;
+        case 400://bad request
+          content.innerHTML = '<b>Bad Request</b>';
+          break;
+        case 401://unauthorized
+          content.innerHTML = '<b>Unauthorized</b>';
+          break;
+        case 403://forbidden
+          content.innerHTML = '<b>Forbidden</b>';
+          break;
+        case 404://not found
+          content.innerHTML = '<b>Resource Not Found</b>';
+        break;
+        case 500://internal
+          content.innerHTML = '<b>Internal Server Error</b>';
+          break;
+        case 501://not implemented 
+          content.innerHTML = '<b>Not Implemented</b>';
+          break;
+        default://else 
+          content.innerHTML = '<p>Status code not implemented by client</p>';
+          break;
+      }
+
+      //display xml message in content section
+      if(contentType == 'text/xml'){
+        const parsedResponse = new window.DOMParser().parseFromString(responseText, 'text/xml');
+        content.innerHTML += `<p>Message: ${parsedResponse.querySelector('message').textContent}</p>`;
+      }
+      //display json message in content section 
+      else {
+        const parsedResponse = JSON.parse(responseText);
+        content.innerHTML += `<p>Message: ${parsedResponse.message}</p>`;
+      }
+
+};
   </script>
 </head>
 <body>
